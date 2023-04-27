@@ -16,6 +16,11 @@ public class Janela extends JFrame implements ActionListener {
     Font fAI10 = new Font("Arial", Font.ITALIC, 10);
     Font fAB10 = new Font("Arial", Font.BOLD, 10);
 
+    //criando cores
+    Color cor1 = new Color(255, 161, 177, 255);
+
+    //Editando cor dos botões
+
     //Método que cria ação do botão
     public void actionPerformed(ActionEvent e) { //implementa a ação execultada ao clicar no botão
         if (e.getSource() == bCar1) {
@@ -52,15 +57,18 @@ public class Janela extends JFrame implements ActionListener {
         setLayout(null);//Retira o Layaout pré programado, fazendo com que eu programe o layout de cada coisa
         //edita tamanho, posição e fonte dos botões
         bStart.setBounds(200, 240, 100, 60); //Define o tamanho e a posição do botão
-        bStart.setFont(fAB10);
+        bStart.setFont(fAB10);//fonte do texto
+        bStart.setForeground(Color.BLUE);
         bCar1.setBounds(150, 300, 100, 60); //Define o tamanho e a posição do botão
-        bCar1.setFont(fAB10);
+        bCar1.setFont(fAB10);//fonte do texto
         bCar2.setBounds(250, 300, 100, 60); //Define o tamanho e a posição do botão
-        bCar2.setFont(fAB10);
+        bCar2.setFont(fAB10);//fonte do texto
         bFinish.setBounds(200, 360, 100, 60); //Define o tamanho e a posição do botão
-        bFinish.setFont(fAB10);
+        bFinish.setFont(fAB10);//fonte do texto
+        bFinish.setForeground(Color.red);
         bSair.setBounds(420, 400, 60, 60); //Define o tamanho e a posição do botão
-        bSair.setFont(fAI10);
+        bSair.setFont(fAI10);//fonte do texto
+        bSair.setBackground(cor1);//Cor do fundo do botão (setForeground para cor do texto)
 
         //add botões na janela
         getContentPane().add(bCar1); //add botão
