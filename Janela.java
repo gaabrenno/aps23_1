@@ -158,7 +158,7 @@ public class Janela extends JFrame implements ActionListener {
     public static void contMilesimo() {
         int n = 0;
         while (true) {
-            for(n=0;n<100;n++) {
+            for (n = 0; n < 100; n++) {
                 lMilesimo.setText(n + "");
                 n++;
                 try {
@@ -168,6 +168,7 @@ public class Janela extends JFrame implements ActionListener {
             }
         }
     }
+
     public static void contSegundos() {
         int n = 0;
         while (true) {
@@ -181,14 +182,17 @@ public class Janela extends JFrame implements ActionListener {
             }
         }
     }
+
     public static void contMinutos() {
         int n = 0;
         while (true) {
-            lMinuto.setText(n + "");
-            n++;
-            try {
-                Thread.sleep(10000);
-            } catch (Exception erro) {
+            for (n = 0; n < 100; n++) {
+                lMinuto.setText(n + "");
+                n++;
+                try {
+                    Thread.sleep(10000);
+                } catch (Exception erro) {
+                }
             }
         }
     }
