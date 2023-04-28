@@ -160,23 +160,23 @@ public class Janela extends JFrame implements ActionListener {
         while (true) {
             for (n = 0; n < 100; n++) {
                 lMilesimo.setText(n + "");
-                n++;
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(10);
                 } catch (Exception erro) {
                 }
             }
         }
+
     }
 
     public static void contSegundos() {
-        int n = 0;
+        int contadorS = 0;
         while (true) {
-            for (n = 0; n < 100; n++) {
-                lSegundo.setText(n + "");
-                n++;
+            for (contadorS = 0; contadorS < 60; contadorS++) {
+                lSegundo.setText(contadorS + "");
+                contadorS++;
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(10);
                 } catch (Exception erro) {
                 }
             }
@@ -184,11 +184,11 @@ public class Janela extends JFrame implements ActionListener {
     }
 
     public static void contMinutos() {
-        int n = 0;
+        int contadorM = 0;
         while (true) {
-            for (n = 0; n < 100; n++) {
-                lMinuto.setText(n + "");
-                n++;
+            for (contadorM = 0; contadorM < 60; contadorM++) {
+                lMinuto.setText(contadorM + "");
+                contadorM++;
                 try {
                     Thread.sleep(10000);
                 } catch (Exception erro) {
