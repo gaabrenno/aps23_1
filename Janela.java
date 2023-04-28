@@ -18,9 +18,9 @@ public class Janela extends JFrame implements ActionListener {
 
     //Criando Label
     JLabel lTime = new JLabel("Time");
-    JLabel lMinuto = new JLabel("00");
-    JLabel lSegundo = new JLabel("00");
-    JLabel lMilesimo = new JLabel("00");
+    static JLabel lMinuto = new JLabel("00");
+    static JLabel lSegundo = new JLabel("00");
+    static JLabel lMilesimo = new JLabel("00");
     JLabel lVoltac1 = new JLabel("Voltas:");
     JLabel lContVolta1 = new JLabel("0");
     JLabel lVoltac2 = new JLabel("Voltas:");
@@ -28,6 +28,7 @@ public class Janela extends JFrame implements ActionListener {
     JLabel lTitulo = new JLabel("Cronus Start");
     JLabel lPonto = new JLabel(":");
     JLabel lPonto2 = new JLabel(":");
+    JLabel lCop = new JLabel("Copyright © 2023 GABRIEL BRENNO. Todos os direitos reservados.");
 
     //criando fontes
     Font fAI10 = new Font("Arial", Font.ITALIC, 10);
@@ -41,23 +42,21 @@ public class Janela extends JFrame implements ActionListener {
     Color cor1 = new Color(255, 161, 177, 255);
     Color cor2 = new Color(218, 215, 215);
 
-    //Editando cor dos botões
+    /* public void CapturarTeclado() {
+         addKeyListener(new KeyAdapter() {
+             public void keyPressed(KeyEvent e) {
+                 int codigo = e.getKeyCode();
+                 int tecla1 = KeyEvent.VK_Q;
+                 int tecla2 = KeyEvent.VK_W;
 
-    public void CapturarTeclado() {
-        addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                int codigo = e.getKeyCode();
-                int tecla1 = KeyEvent.VK_Q;
-                int tecla2 = KeyEvent.VK_W;
-
-                if (codigo == tecla1) {
-                    contador++;
-                } else if (codigo==tecla2) {
-                    contador2++;
-                }
-            }
-        });
-    }
+                 if (codigo == tecla1) {
+                     contador++;
+                 } else if (codigo==tecla2) {
+                     contador2++;
+                 }
+             }
+         });
+     }*/
     //Método que cria ação do botão
     public void actionPerformed(ActionEvent e) { //implementa a ação execultada ao clicar no botão
         if (e.getSource() == bCar1) {
@@ -69,7 +68,7 @@ public class Janela extends JFrame implements ActionListener {
         } else if (e.getSource() == bStart) {
             JOptionPane.showMessageDialog(null, "A Corrida iniciou!");
         } else if (e.getSource() == bFinish) {
-            JOptionPane.showMessageDialog(null, "A Corrida iniciou!");
+            JOptionPane.showMessageDialog(null, "A Corrida foi encerrada!");
         } else if (e.getSource() == bSair) {
             System.exit(0);
         }
@@ -80,7 +79,7 @@ public class Janela extends JFrame implements ActionListener {
 
         JFrame jf = new JFrame(); //Cria o objeto Janela // obsoleto caso eu use o extends JFrame
 
-        setTitle("Titulo Titulo"); //add o titulo
+        setTitle("Cronus Start 1.0"); //add o titulo
         setSize(500, 500); //seta o tamanho (altura / largura)
         setVisible(true); //Deixa a janela visivel
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //encerra a execulção após fechar o programa
@@ -131,6 +130,8 @@ public class Janela extends JFrame implements ActionListener {
         lPonto2.setBounds(305, 90, 150, 150);
         lPonto.setFont(fAL75);
         lPonto2.setFont(fAL75);
+        lCop.setBounds(80, 420, 500, 60);
+        lCop.setFont(fAI10);
 
 
         //add botões na janela
@@ -150,11 +151,52 @@ public class Janela extends JFrame implements ActionListener {
         getContentPane().add(lTitulo);
         getContentPane().add(lPonto);
         getContentPane().add(lPonto2);
+        getContentPane().add(lCop);
 
     }
 
+    public static void contMilesimo() {
+        int n = 0;
+        while (true) {
+            for(n=0;n<100;n++) {
+                lMilesimo.setText(n + "");
+                n++;
+                try {
+                    Thread.sleep(100);
+                } catch (Exception erro) {
+                }
+            }
+        }
+    }
+    public static void contSegundos() {
+        int n = 0;
+        while (true) {
+            for (n = 0; n < 100; n++) {
+                lSegundo.setText(n + "");
+                n++;
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception erro) {
+                }
+            }
+        }
+    }
+    public static void contMinutos() {
+        int n = 0;
+        while (true) {
+            lMinuto.setText(n + "");
+            n++;
+            try {
+                Thread.sleep(10000);
+            } catch (Exception erro) {
+            }
+        }
+    }
 
     public static void main(String[] args) {
         new Janela();
+        contMilesimo();
+        contSegundos();
+        contMinutos();
     }
 }
