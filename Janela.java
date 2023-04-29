@@ -2,9 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.EventObject;
 
 public class Janela extends JFrame implements ActionListener {
 
@@ -16,7 +13,7 @@ public class Janela extends JFrame implements ActionListener {
     JButton bCar2 = new JButton("Car 2"); //criando objeto botão
     JButton bStart = new JButton("Start"); //criando objeto botão
     JButton bSair = new JButton("Sair");
-    JButton bFinish = new JButton("Finish");
+    JButton bFinish = new JButton("Stop");
 
     //Criando Label
     JLabel lTime = new JLabel("Time");
@@ -44,27 +41,10 @@ public class Janela extends JFrame implements ActionListener {
     Color cor1 = new Color(255, 161, 177, 255);
     Color cor2 = new Color(218, 215, 215);
 
-
-
-    /* public void CapturarTeclado() {
-         addKeyListener(new KeyAdapter() {
-             public void keyPressed(KeyEvent e) {
-                 int codigo = e.getKeyCode();
-                 int tecla1 = KeyEvent.VK_Q;
-                 int tecla2 = KeyEvent.VK_W;
-
-                 if (codigo == tecla1) {
-                     contador++;
-                 } else if (codigo==tecla2) {
-                     contador2++;
-                 }
-             }
-         });
-     }*/
     //Método que cria ação do botão
+    private Cronometro cronometro = new Cronometro();
     @Override
     public void actionPerformed(ActionEvent e) { //implementa a ação execultada ao clicar no botão
-        Cronometro cronometro = new Cronometro();
 
         if (e.getSource() == bCar1) {
             contador++;
@@ -76,22 +56,17 @@ public class Janela extends JFrame implements ActionListener {
         }
         if (e.getSource() == bStart) {
             cronometro.start();
-        }
-        if (e.getSource() == bFinish) {
-            JOptionPane.showMessageDialog(null, "A Corrida foi encerrada!");
-            cronometro.interrupt();
+        }if (e.getSource() == bFinish) {
+            cronometro.pararCronometro();
+            JOptionPane.showMessageDialog(null,"A Corrida foi encerrada! Para iniciar outra reinicie o programa!");
         }
         if (e.getSource() == bSair) {
             System.exit(0);
         }
     }
 
-
-
     //método que cria Frame e seta os elementos
     public Janela() {
-
-        JFrame jf = new JFrame(); //Cria o objeto Janela // obsoleto caso eu use o extends JFrame
 
         setTitle("Cronus Start 1.0"); //add o titulo
         setSize(500, 500); //seta o tamanho (altura / largura)
@@ -147,7 +122,6 @@ public class Janela extends JFrame implements ActionListener {
         lCop.setBounds(80, 420, 500, 60);
         lCop.setFont(fAI10);
 
-
         //add botões na janela
         getContentPane().add(bCar1); //add botão
         getContentPane().add(bCar2); //add botão
@@ -166,12 +140,9 @@ public class Janela extends JFrame implements ActionListener {
         getContentPane().add(lPonto);
         getContentPane().add(lPonto2);
         getContentPane().add(lCop);
-
     }
-
 
     public static void main(String[] args) {
         new Janela();
-
     }
 }
