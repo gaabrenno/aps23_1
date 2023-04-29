@@ -4,8 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.EventObject;
 
 public class Janela extends JFrame implements ActionListener {
+
 
     int contador = 0;
     int contador2 = 0;
@@ -42,6 +44,8 @@ public class Janela extends JFrame implements ActionListener {
     Color cor1 = new Color(255, 161, 177, 255);
     Color cor2 = new Color(218, 215, 215);
 
+
+
     /* public void CapturarTeclado() {
          addKeyListener(new KeyAdapter() {
              public void keyPressed(KeyEvent e) {
@@ -58,21 +62,31 @@ public class Janela extends JFrame implements ActionListener {
          });
      }*/
     //Método que cria ação do botão
+    @Override
     public void actionPerformed(ActionEvent e) { //implementa a ação execultada ao clicar no botão
+        Cronometro cronometro = new Cronometro();
+
         if (e.getSource() == bCar1) {
             contador++;
             lContVolta1.setText(String.valueOf(contador));
-        } else if (e.getSource() == bCar2) {
+        }
+        if (e.getSource() == bCar2) {
             contador2++;
             lContVolta2.setText(String.valueOf(contador2));
-        } else if (e.getSource() == bStart) {
-            JOptionPane.showMessageDialog(null, "A Corrida iniciou!");
-        } else if (e.getSource() == bFinish) {
+        }
+        if (e.getSource() == bStart) {
+            cronometro.start();
+        }
+        if (e.getSource() == bFinish) {
             JOptionPane.showMessageDialog(null, "A Corrida foi encerrada!");
-        } else if (e.getSource() == bSair) {
+            cronometro.interrupt();
+        }
+        if (e.getSource() == bSair) {
             System.exit(0);
         }
     }
+
+
 
     //método que cria Frame e seta os elementos
     public Janela() {
@@ -155,52 +169,9 @@ public class Janela extends JFrame implements ActionListener {
 
     }
 
-    public static void contMilesimo() {
-        int n = 0;
-        while (true) {
-            for (n = 0; n < 100; n++) {
-                lMilesimo.setText(n + "");
-                try {
-                    Thread.sleep(10);
-                } catch (Exception erro) {
-                }
-            }
-        }
-
-    }
-
-    public static void contSegundos() {
-        int contadorS = 0;
-        while (true) {
-            for (contadorS = 0; contadorS < 60; contadorS++) {
-                lSegundo.setText(contadorS + "");
-                contadorS++;
-                try {
-                    Thread.sleep(10);
-                } catch (Exception erro) {
-                }
-            }
-        }
-    }
-
-    public static void contMinutos() {
-        int contadorM = 0;
-        while (true) {
-            for (contadorM = 0; contadorM < 60; contadorM++) {
-                lMinuto.setText(contadorM + "");
-                contadorM++;
-                try {
-                    Thread.sleep(10000);
-                } catch (Exception erro) {
-                }
-            }
-        }
-    }
 
     public static void main(String[] args) {
         new Janela();
-        contMilesimo();
-        contSegundos();
-        contMinutos();
+
     }
 }
