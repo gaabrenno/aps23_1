@@ -64,8 +64,10 @@ public class Janela extends JFrame implements ActionListener {
         if (e.getSource() == bStart) {
             cronometro.start();
         }if (e.getSource() == bFinish) {
+
             cronometro.pararCronometro();
-            JOptionPane.showMessageDialog(null,"A Corrida foi encerrada! Para iniciar outra reinicie o programa!");
+            String nome = cNome.getText();
+            JOptionPane.showMessageDialog(null,"A Corrida "+nome+" foi encerrada! \nPara iniciar outra reinicie o programa!\nO tempo total foi de:"+tempo);
         }
         if (e.getSource() == bSair) {
             System.exit(0);
