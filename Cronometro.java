@@ -18,10 +18,10 @@ public class Cronometro extends Thread implements Runnable {
                 if (n == 99) {
                     contadorS++;
                     Janela.lSegundo.setText(contadorS + "");
-                    if (contadorS == 10) {
-                        contadorS = 0;
-                    }
                     if (contadorS == 9) {
+                        contadorS = -1;
+                    }
+                    if (contadorS == 0) {
                         contadorM++;
                         Janela.lMinuto.setText(contadorM + "");
                     }

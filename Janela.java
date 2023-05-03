@@ -12,8 +12,9 @@ public class Janela extends JFrame implements ActionListener {
     JButton bCar1 = new JButton("Car 1"); //criando objeto botão
     JButton bCar2 = new JButton("Car 2"); //criando objeto botão
     JButton bStart = new JButton("Start"); //criando objeto botão
-    JButton bSair = new JButton("Sair");
     JButton bFinish = new JButton("Stop");
+    JButton bSair = new JButton("Sair");
+    JButton bResultados = new JButton("Resultados");
 
     //Criando Label
     JLabel lTime = new JLabel("Time");
@@ -27,7 +28,10 @@ public class Janela extends JFrame implements ActionListener {
     JLabel lTitulo = new JLabel("Cronus Start");
     JLabel lPonto = new JLabel(":");
     JLabel lPonto2 = new JLabel(":");
-    JLabel lCop = new JLabel("Copyright © 2023 GABRIEL BRENNO. Todos os direitos reservados.");
+    JLabel lCop = new JLabel("Copyright © 2023 GABRIEL BRENNO.");
+    JLabel lNome = new JLabel("Nome da Corrida:");
+
+    JTextField cNome = new JTextField(15);
 
     //criando fontes
     Font fAI10 = new Font("Arial", Font.ITALIC, 10);
@@ -35,12 +39,15 @@ public class Janela extends JFrame implements ActionListener {
     Font fAL75 = new Font("Alfa Slab One Regular", Font.BOLD, 75);
     Font fAL30 = new Font("Alfa Slab One Regular", Font.BOLD, 30);
     Font fAL15 = new Font("Alfa Slab One Regular", Font.BOLD, 15);
+    Font fALP15 = new Font("Alfa Slab One Regular", Font.PLAIN, 10);
     Font fAn50 = new Font("Andada Pro", Font.BOLD, 50);
 
     //criando cores
     Color cor1 = new Color(255, 161, 177, 255);
     Color cor2 = new Color(218, 215, 215);
-
+    int caro1[] = new int[3];
+    int caro2[] = new int[3];
+    String tempo = lMinuto+":"+lSegundo+":"+lMilesimo;
     //Método que cria ação do botão
     private Cronometro cronometro = new Cronometro();
     @Override
@@ -97,6 +104,8 @@ public class Janela extends JFrame implements ActionListener {
         bSair.setBounds(420, 400, 60, 60); //Define o tamanho e a posição do botão
         bSair.setFont(fAI10);//fonte do texto
         bSair.setBackground(cor1);//Cor do fundo do botão (setForeground para cor do texto)
+        bResultados.setBounds(10, 400, 100, 60); //Define o tamanho e a posição do botão
+        bResultados.setFont(fAB10);//fonte do texto
 
         //Editando Label
         lTitulo.setBounds(95, 3, 500, 100);
@@ -107,20 +116,23 @@ public class Janela extends JFrame implements ActionListener {
         lVoltac2.setBounds(360, 260, 60, 60);
         lContVolta2.setBounds(370, 300, 100, 60);
         lContVolta2.setFont(fAL30);
-        lTime.setBounds(225, 80, 100, 60);
+        lTime.setBounds(225, 75, 100, 60);
         lTime.setFont(fAL15);
-        lMinuto.setBounds(50, 90, 150, 150);
+        lNome.setBounds(150, 185, 150, 60);
+        lNome.setFont(fALP15);
+        lMinuto.setBounds(40, 85, 150, 150);
         lMinuto.setFont(fAL75);
-        lSegundo.setBounds(190, 90, 150, 150);
+        lSegundo.setBounds(190, 85, 150, 150);
         lSegundo.setFont(fAL75);
-        lMilesimo.setBounds(330, 90, 150, 150);
+        lMilesimo.setBounds(330, 85, 150, 150);
         lMilesimo.setFont(fAL75);
         lPonto.setBounds(165, 90, 150, 150);
         lPonto2.setBounds(305, 90, 150, 150);
         lPonto.setFont(fAL75);
         lPonto2.setFont(fAL75);
-        lCop.setBounds(80, 420, 500, 60);
+        lCop.setBounds(160, 420, 500, 60);
         lCop.setFont(fAI10);
+        cNome.setBounds(245,205,75,20);
 
         //add botões na janela
         getContentPane().add(bCar1); //add botão
@@ -128,6 +140,7 @@ public class Janela extends JFrame implements ActionListener {
         getContentPane().add(bStart); //add botão
         getContentPane().add(bFinish); //add botão
         getContentPane().add(bSair); //add botão
+        getContentPane().add(bResultados); //add botão
         getContentPane().add(lVoltac1);
         getContentPane().add(lVoltac2);
         getContentPane().add(lContVolta1);
@@ -140,6 +153,8 @@ public class Janela extends JFrame implements ActionListener {
         getContentPane().add(lPonto);
         getContentPane().add(lPonto2);
         getContentPane().add(lCop);
+        getContentPane().add(lNome);
+        getContentPane().add(cNome);
     }
 
     public static void main(String[] args) {
