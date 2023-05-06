@@ -2,12 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.*;
 
 public class Janela extends JFrame implements ActionListener {
 
-
     int contador = 0;
     int contador2 = 0;
+    int posicao = 0;
+    int min;
+    int seg;
+    int mil;
+    String nomes;
+    String tempo;
+
     //criando botões
     JButton bCar1 = new JButton("Car 1"); //criando objeto botão
     JButton bCar2 = new JButton("Car 2"); //criando objeto botão
@@ -45,37 +55,115 @@ public class Janela extends JFrame implements ActionListener {
     //criando cores
     Color cor1 = new Color(255, 161, 177, 255);
     Color cor2 = new Color(218, 215, 215);
-    int caro1[] = new int[3];
-    int caro2[] = new int[3];
-    String tempo = lMinuto+":"+lSegundo+":"+lMilesimo;
+
     //Método que cria ação do botão
     private Cronometro cronometro = new Cronometro();
+    int tempoS;
+
     @Override
     public void actionPerformed(ActionEvent e) { //implementa a ação execultada ao clicar no botão
 
         if (e.getSource() == bCar1) {
+            posicao++;
             contador++;
             lContVolta1.setText(String.valueOf(contador));
+            bdCar1();
+            System.out.println(posicao);
         }
         if (e.getSource() == bCar2) {
+            posicao++;
             contador2++;
             lContVolta2.setText(String.valueOf(contador2));
+            bdCar2();
+            System.out.println(posicao);
         }
         if (e.getSource() == bStart) {
             cronometro.start();
-        }if (e.getSource() == bFinish) {
-
+            bdStart();
+        }
+        if (e.getSource() == bFinish) {
             cronometro.pararCronometro();
             String nome = cNome.getText();
-            JOptionPane.showMessageDialog(null,"A Corrida "+nome+" foi encerrada! \nPara iniciar outra reinicie o programa!\nO tempo total foi de:"+tempo);
+            min = Integer.parseInt(lMinuto.getText());
+            seg = Integer.parseInt(lSegundo.getText());
+            mil = Integer.parseInt(lMilesimo.getText());
+            tempo = min + ":" + seg + ":" + mil;
+            JOptionPane.showMessageDialog(null, "A Corrida " + nome + " foi encerrada! \nPara iniciar outra reinicie o programa!\nO tempo total foi de: " + tempo);
         }
         if (e.getSource() == bSair) {
             System.exit(0);
         }
     }
 
+    Connection conecta() {
+        String url = "jdbc:mysql://localhost/cronus_start?useSSL=false&serverTimezone=UTC";
+        Connection con;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(url, "root", "");
+            return con;
+        } catch (Exception erro) {
+            return null;
+        }
+    }
+
+    public void bdStart() {
+        Connection con = conecta();
+        try {
+            Statement st = con.createStatement();
+            String nomes = cNome.getText();
+            int result = st.executeUpdate("insert into race (NOME) values ('" + nomes + "')");
+        } catch (Exception erro) {
+        }
+    }
+
+    public void bdCar1() {
+        Connection con = conecta();
+        try {
+            Statement st = con.createStatement();
+            String nomes = cNome.getText();
+            min = Integer.parseInt(lMinuto.getText());
+            seg = Integer.parseInt(lSegundo.getText());
+            mil = Integer.parseInt(lMilesimo.getText());
+            tempo = min + ":" + seg + ":" + mil;
+            if (posicao == 1) {
+                int result = st.executeUpdate("insert into race (volta1_carro1, tempo1_carro1) values (1,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+            } else if (posicao == 2) {
+                int result = st.executeUpdate("insert into race (v1_2, tempo1_carro2) values (1,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+            } else if (posicao == 3) {
+                int result = st.executeUpdate("insert into race (v2_1, tempo2_carro1) values (1,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+            } else if (posicao == 4) {
+                int result = st.executeUpdate("insert into race (v2_2, tempo2_carro2) values (1,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+            }
+        } catch (Exception erro) {
+        }
+    }
+
+    public void bdCar2() {
+        Connection con = conecta();
+        try {
+            Statement st = con.createStatement();
+            nomes = cNome.getText();
+            String tempos = tempo;
+            min = Integer.parseInt(lMinuto.getText());
+            seg = Integer.parseInt(lSegundo.getText());
+            mil = Integer.parseInt(lMilesimo.getText());
+            tempo = min + ":" + seg + ":" + mil;
+            if (posicao == 1) {
+                int result = st.executeUpdate("insert into race (tempo1_carro1, tempo1_carro1) values (2,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+            } else if (posicao == 2) {
+                int result = st.executeUpdate("insert into race (volta1_carro2, tempo1_carro2) values (2,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+            } else if (posicao == 3) {
+                int result = st.executeUpdate("insert into race (volta2_carro1, tempo2_carro1) values (2,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+            } else if (posicao == 4) {
+                int result = st.executeUpdate("insert into race (volta2_carro2, tempo2_carro2) values (2,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+            }
+        } catch (Exception erro) {
+        }
+    }
+
     //método que cria Frame e seta os elementos
-    public Janela() {
+    public Janela() throws SQLException {
 
         setTitle("Cronus Start 1.0"); //add o titulo
         setSize(500, 500); //seta o tamanho (altura / largura)
@@ -134,10 +222,10 @@ public class Janela extends JFrame implements ActionListener {
         lPonto2.setFont(fAL75);
         lCop.setBounds(160, 420, 500, 60);
         lCop.setFont(fAI10);
-        cNome.setBounds(245,205,75,20);
+        cNome.setBounds(245, 205, 75, 20);
 
         //add botões na janela
-        getContentPane().add(bCar1); //add botão
+        this.add(bCar1); //add botão
         getContentPane().add(bCar2); //add botão
         getContentPane().add(bStart); //add botão
         getContentPane().add(bFinish); //add botão
@@ -159,7 +247,7 @@ public class Janela extends JFrame implements ActionListener {
         getContentPane().add(cNome);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         new Janela();
     }
 }
