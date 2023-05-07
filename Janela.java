@@ -121,19 +121,19 @@ public class Janela extends JFrame implements ActionListener {
         Connection con = conecta();
         try {
             Statement st = con.createStatement();
-            String nomes = cNome.getText();
+            nomes = cNome.getText();
             min = Integer.parseInt(lMinuto.getText());
             seg = Integer.parseInt(lSegundo.getText());
             mil = Integer.parseInt(lMilesimo.getText());
             tempo = min + ":" + seg + ":" + mil;
             if (posicao == 1) {
-                int result = st.executeUpdate("insert into race (volta1_carro1, tempo1_carro1) values (1,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+                int result = st.executeUpdate("update race set volta1_carro1 = 1, tempo1_carro1 ='" + tempo + "' WHERE NOME = '" + nomes + "';");
             } else if (posicao == 2) {
-                int result = st.executeUpdate("insert into race (v1_2, tempo1_carro2) values (1,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+                int result = st.executeUpdate("update race set volta1_carro2 = 1, tempo1_carro2 ='" + tempo + "' WHERE NOME = '" + nomes + "';");
             } else if (posicao == 3) {
-                int result = st.executeUpdate("insert into race (v2_1, tempo2_carro1) values (1,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+                int result = st.executeUpdate("update race set volta2_carro1 = 1, tempo2_carro1 ='" + tempo + "' WHERE NOME = '" + nomes + "';");
             } else if (posicao == 4) {
-                int result = st.executeUpdate("insert into race (v2_2, tempo2_carro2) values (1,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+                int result = st.executeUpdate("update race set volta2_carro2 = 1, tempo2_carro2 ='" + tempo + "' WHERE NOME = '" + nomes + "';");
             }
         } catch (Exception erro) {
         }
@@ -150,13 +150,13 @@ public class Janela extends JFrame implements ActionListener {
             mil = Integer.parseInt(lMilesimo.getText());
             tempo = min + ":" + seg + ":" + mil;
             if (posicao == 1) {
-                int result = st.executeUpdate("insert into race (tempo1_carro1, tempo1_carro1) values (2,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+                int result = st.executeUpdate("update race set volta1_carro1 = 2, tempo1_carro1 ='" + tempo + "' WHERE NOME = '" + nomes + "';");
             } else if (posicao == 2) {
-                int result = st.executeUpdate("insert into race (volta1_carro2, tempo1_carro2) values (2,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+                int result = st.executeUpdate("update race set volta1_carro2 = 2, tempo1_carro2 ='" + tempo + "' WHERE NOME = '" + nomes + "';");
             } else if (posicao == 3) {
-                int result = st.executeUpdate("insert into race (volta2_carro1, tempo2_carro1) values (2,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+                int result = st.executeUpdate("update race set volta2_carro1 = 2, tempo2_carro1 ='" + tempo + "' WHERE NOME = '" + nomes + "';");
             } else if (posicao == 4) {
-                int result = st.executeUpdate("insert into race (volta2_carro2, tempo2_carro2) values (2,'" + tempo + "') WHERE NOME = '" + nomes + "'");
+                int result = st.executeUpdate("update race set volta2_carro2 = 2, tempo2_carro2 ='" + tempo + "' WHERE NOME = '" + nomes + "';");
             }
         } catch (Exception erro) {
         }
