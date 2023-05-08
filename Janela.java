@@ -1,14 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.*;
+import javax.swing.*;
 
 public class Janela extends JFrame implements ActionListener {
 
+    private Cronometro cronometro = new Cronometro();
     int contador = 0;
     int contador2 = 0;
     int posicao = 0;
@@ -17,14 +17,18 @@ public class Janela extends JFrame implements ActionListener {
     int mil;
     String nomes;
     String tempo;
+    String volta1;
+    String tempo1;
+    String volta2;
+    String tempo2;
 
     //criando botões
-    JButton bCar1 = new JButton("Car 1"); //criando objeto botão
-    JButton bCar2 = new JButton("Car 2"); //criando objeto botão
+    JButton bCar1 = new JButton("Caro 1"); //criando objeto botão
+    JButton bCar2 = new JButton("Caro 2"); //criando objeto botão
     JButton bStart = new JButton("Start"); //criando objeto botão
     JButton bFinish = new JButton("Stop");
     JButton bSair = new JButton("Sair");
-    JButton bResultados = new JButton("Resultados");
+    JButton bResultados = new JButton("Resultado:");
 
     //Criando Label
     JLabel lTime = new JLabel("Time");
@@ -55,10 +59,9 @@ public class Janela extends JFrame implements ActionListener {
     //criando cores
     Color cor1 = new Color(255, 161, 177, 255);
     Color cor2 = new Color(218, 215, 215);
+    private java.lang.Object Object;
 
     //Método que cria ação do botão
-    private Cronometro cronometro = new Cronometro();
-    int tempoS;
 
     @Override
     public void actionPerformed(ActionEvent e) { //implementa a ação execultada ao clicar no botão
@@ -69,6 +72,18 @@ public class Janela extends JFrame implements ActionListener {
             lContVolta1.setText(String.valueOf(contador));
             bdCar1();
             System.out.println(posicao);
+            if (posicao == 1) {
+                volta1 = "Carro 1";
+            }
+            if (posicao == 3) {
+                volta2 = "Carro 1";
+            }
+            if (posicao == 1) {
+                tempo1 = tempo;
+            }
+            if (posicao == 3) {
+                tempo2 = tempo;
+            }
         }
         if (e.getSource() == bCar2) {
             posicao++;
@@ -76,6 +91,18 @@ public class Janela extends JFrame implements ActionListener {
             lContVolta2.setText(String.valueOf(contador2));
             bdCar2();
             System.out.println(posicao);
+            if (posicao == 1) {
+                volta1 = "Carro 2";
+            }
+            if (posicao == 3) {
+                volta2 = "Carro 2";
+            }
+            if (posicao == 1) {
+                tempo1 = tempo;
+            }
+            if (posicao == 3) {
+                tempo2 = tempo;
+            }
         }
         if (e.getSource() == bStart) {
             cronometro.start();
@@ -92,6 +119,9 @@ public class Janela extends JFrame implements ActionListener {
         }
         if (e.getSource() == bSair) {
             System.exit(0);
+        }
+        if (e.getSource() == bResultados) {
+            JOptionPane.showMessageDialog(null, "VOLTA 1:\nMelhor tempo: " + volta1 + " com o tempo: " + tempo1 + "! \nVOLTA 2:\nMelhor tempo:" + volta2 + " com o tempo: " + tempo2 + ". \nVENCEDOR DA CORRIDA: " + nomes + ": " + volta2 + "!");
         }
     }
 
@@ -163,7 +193,7 @@ public class Janela extends JFrame implements ActionListener {
     }
 
     //método que cria Frame e seta os elementos
-    public Janela() throws SQLException {
+    public Janela() {
 
         setTitle("Cronus Start 1.0"); //add o titulo
         setSize(500, 500); //seta o tamanho (altura / largura)
@@ -178,6 +208,7 @@ public class Janela extends JFrame implements ActionListener {
         bStart.addActionListener(this);
         bFinish.addActionListener(this);
         bSair.addActionListener(this);
+        bResultados.addActionListener(this);
 
         setLayout(null);//Retira o Layaout pré programado, fazendo com que eu programe o layout de cada coisa
         //edita tamanho, posição e fonte dos botões
@@ -225,7 +256,7 @@ public class Janela extends JFrame implements ActionListener {
         cNome.setBounds(245, 205, 75, 20);
 
         //add botões na janela
-        this.add(bCar1); //add botão
+        getContentPane().add(bCar1); //add botão
         getContentPane().add(bCar2); //add botão
         getContentPane().add(bStart); //add botão
         getContentPane().add(bFinish); //add botão
@@ -245,6 +276,16 @@ public class Janela extends JFrame implements ActionListener {
         getContentPane().add(lCop);
         getContentPane().add(lNome);
         getContentPane().add(cNome);
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                if (keyCode == KeyEvent.VK_PRINTSCREEN) {
+                    setExtendedState(Frame.ICONIFIED);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) throws SQLException {
