@@ -4,9 +4,8 @@ import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.*;
-import javax.swing.*;
 
-public class Janela extends JFrame implements ActionListener {
+public abstract class Main extends JFrame implements ActionListener, KeyListener {
 
     private Cronometro cronometro = new Cronometro();
     int contador = 0;
@@ -47,6 +46,7 @@ public class Janela extends JFrame implements ActionListener {
 
     JTextField cNome = new JTextField(15);
 
+    JPanel painel = new JPanel();
     //criando fontes
     Font fAI10 = new Font("Arial", Font.ITALIC, 10);
     Font fAB10 = new Font("Arial", Font.BOLD, 10);
@@ -107,6 +107,7 @@ public class Janela extends JFrame implements ActionListener {
         if (e.getSource() == bStart) {
             cronometro.start();
             bdStart();
+            bStart.setEnabled(false);
         }
         if (e.getSource() == bFinish) {
             cronometro.pararCronometro();
@@ -115,13 +116,18 @@ public class Janela extends JFrame implements ActionListener {
             seg = Integer.parseInt(lSegundo.getText());
             mil = Integer.parseInt(lMilesimo.getText());
             tempo = min + ":" + seg + ":" + mil;
-            JOptionPane.showMessageDialog(null, "A Corrida " + nome + " foi encerrada! \nPara iniciar outra reinicie o programa!\nO tempo total foi de: " + tempo);
+            JOptionPane.showMessageDialog(null, "A Corrida " + nome + " foi encerrada!" +
+                    " \nPara iniciar outra reinicie o programa!" +
+                    "\nO tempo total foi de: " + tempo);
         }
         if (e.getSource() == bSair) {
             System.exit(0);
         }
         if (e.getSource() == bResultados) {
-            JOptionPane.showMessageDialog(null, "VOLTA 1:\nMelhor tempo: " + volta1 + " com o tempo: " + tempo1 + "! \nVOLTA 2:\nMelhor tempo:" + volta2 + " com o tempo: " + tempo2 + ". \nVENCEDOR DA CORRIDA: " + nomes + ": " + volta2 + "!");
+            JOptionPane.showMessageDialog(null, "VOLTA 1:" +
+                    "\nMelhor tempo: " + volta1 + " com o tempo: " + tempo1 + "! " +
+                    "\n\nVOLTA 2:\nMelhor tempo:" + volta2 + " com o tempo: " + tempo2 + ". " +
+                    "\n\nVENCEDOR DA CORRIDA " + nomes + ": " + volta2 + "!");
         }
     }
 
@@ -193,7 +199,7 @@ public class Janela extends JFrame implements ActionListener {
     }
 
     //método que cria Frame e seta os elementos
-    public Janela() {
+    public Main() {
 
         setTitle("Cronus Start 1.0"); //add o titulo
         setSize(500, 500); //seta o tamanho (altura / largura)
@@ -202,6 +208,12 @@ public class Janela extends JFrame implements ActionListener {
         setLocationRelativeTo(null); //seta a abertura do programa no centro
         setResizable(false); // bloqueia o redimencionamento da janela
         setBackground(cor2);
+        setFocusable(true);//manter o foco no JF
+        setLayout(null);//Retira o Layaout pré programado, fazendo com que eu programe o layout de cada coisa
+        addKeyListener(this);
+
+        painel.setSize(500, 500);
+        painel.setLayout(null);
 
         bCar1.addActionListener(this);
         bCar2.addActionListener(this);
@@ -210,7 +222,6 @@ public class Janela extends JFrame implements ActionListener {
         bSair.addActionListener(this);
         bResultados.addActionListener(this);
 
-        setLayout(null);//Retira o Layaout pré programado, fazendo com que eu programe o layout de cada coisa
         //edita tamanho, posição e fonte dos botões
         bStart.setBounds(200, 240, 100, 60); //Define o tamanho e a posição do botão
         bStart.setFont(fAB10);//fonte do texto
@@ -256,39 +267,53 @@ public class Janela extends JFrame implements ActionListener {
         cNome.setBounds(245, 205, 75, 20);
 
         //add botões na janela
-        getContentPane().add(bCar1); //add botão
-        getContentPane().add(bCar2); //add botão
-        getContentPane().add(bStart); //add botão
-        getContentPane().add(bFinish); //add botão
-        getContentPane().add(bSair); //add botão
-        getContentPane().add(bResultados); //add botão
-        getContentPane().add(lVoltac1);
-        getContentPane().add(lVoltac2);
-        getContentPane().add(lContVolta1);
-        getContentPane().add(lContVolta2);
-        getContentPane().add(lTime);
-        getContentPane().add(lMinuto);
-        getContentPane().add(lSegundo);
-        getContentPane().add(lMilesimo);
-        getContentPane().add(lTitulo);
-        getContentPane().add(lPonto);
-        getContentPane().add(lPonto2);
-        getContentPane().add(lCop);
-        getContentPane().add(lNome);
-        getContentPane().add(cNome);
+        painel.add(bCar1); //add botão
+        painel.add(bCar2); //add botão
+        painel.add(bStart); //add botão
+        painel.add(bFinish); //add botão
+        painel.add(bSair); //add botão
+        painel.add(bResultados); //add botão
+        painel.add(lVoltac1);
+        painel.add(lVoltac2);
+        painel.add(lContVolta1);
+        painel.add(lContVolta2);
+        painel.add(lTime);
+        painel.add(lMinuto);
+        painel.add(lSegundo);
+        painel.add(lMilesimo);
+        painel.add(lTitulo);
+        painel.add(lPonto);
+        painel.add(lPonto2);
+        painel.add(lCop);
+        painel.add(lNome);
+        painel.add(cNome);
+        this.add(painel);
 
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int keyCode = e.getKeyCode();
-                if (keyCode == KeyEvent.VK_PRINTSCREEN) {
-                    setExtendedState(Frame.ICONIFIED);
-                }
-            }
-        });
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_PRINTSCREEN) {
+            System.out.println("apertou");
+        }
     }
 
     public static void main(String[] args) throws SQLException {
-        new Janela();
+        new Main() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        };
     }
 }
