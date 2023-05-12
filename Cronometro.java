@@ -33,4 +33,3 @@ public class Cronometro extends Thread implements Runnable {
         }
     }
 }
-

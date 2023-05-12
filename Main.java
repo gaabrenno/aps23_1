@@ -5,9 +5,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.*;
 
-public abstract class Main extends JFrame implements ActionListener, KeyListener {
+public abstract class Main extends JFrame implements ActionListener {
 
     private Cronometro cronometro = new Cronometro();
+    private static PrintBloc bloPrint = new PrintBloc();
     int contador = 0;
     int contador2 = 0;
     int posicao = 0;
@@ -117,7 +118,7 @@ public abstract class Main extends JFrame implements ActionListener, KeyListener
             mil = Integer.parseInt(lMilesimo.getText());
             tempo = min + ":" + seg + ":" + mil;
             JOptionPane.showMessageDialog(null, "A Corrida " + nome + " foi encerrada!" +
-                    " \nPara iniciar outra reinicie o programa!" +
+                    "\nPara iniciar outra reinicie o programa!" +
                     "\nO tempo total foi de: " + tempo);
         }
         if (e.getSource() == bSair) {
@@ -210,7 +211,6 @@ public abstract class Main extends JFrame implements ActionListener, KeyListener
         setBackground(cor2);
         setFocusable(true);//manter o foco no JF
         setLayout(null);//Retira o Layaout pré programado, fazendo com que eu programe o layout de cada coisa
-        addKeyListener(this);
 
         painel.setSize(500, 500);
         painel.setLayout(null);
@@ -291,29 +291,10 @@ public abstract class Main extends JFrame implements ActionListener, KeyListener
 
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_PRINTSCREEN) {
-            System.out.println("apertou");
-        }
-    }
 
     public static void main(String[] args) throws SQLException {
         new Main() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
         };
+        bloPrint.blockPrintsScreen();
     }
 }
